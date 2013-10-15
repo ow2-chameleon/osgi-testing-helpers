@@ -14,16 +14,17 @@
  */
 package org.ow2.chameleon.testing.helpers;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.security.cert.X509Certificate;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
 
 public class BundleStub implements Bundle {
 
@@ -37,7 +38,15 @@ public class BundleStub implements Bundle {
         return 0;
     }
 
+    public void start(int options) throws BundleException {
+
+    }
+
     public void start() throws BundleException {
+
+    }
+
+    public void stop(int options) throws BundleException {
 
     }
 
@@ -63,6 +72,22 @@ public class BundleStub implements Bundle {
 
     public BundleContext getBundleContext() {
         return m_bundleContext;
+    }
+
+    public Map<X509Certificate, List<X509Certificate>> getSignerCertificates(int signersType) {
+        return null;
+    }
+
+    public Version getVersion() {
+        return new Version(1,0,0);
+    }
+
+    public <A> A adapt(Class<A> type) {
+        return (A) this;
+    }
+
+    public File getDataFile(String filename) {
+        return null;
     }
 
     public long getBundleId() {
@@ -119,5 +144,9 @@ public class BundleStub implements Bundle {
 
     public Enumeration findEntries(String s, String s1, boolean b) {
         return null;
+    }
+
+    public int compareTo(Bundle o) {
+        return 0;
     }
 }

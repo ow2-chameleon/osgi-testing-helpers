@@ -24,7 +24,7 @@ import java.util.*;
 public class BundleContextStub implements BundleContext {
 
     private Map<String, String> m_properties = new HashMap<String, String>();
-    private List<ServiceRegistrationStub> m_services = new ArrayList<ServiceRegistrationStub>();
+    List<ServiceRegistrationStub> m_services = new ArrayList<ServiceRegistrationStub>();
     private BundleStub m_bundle;
 
 
@@ -39,7 +39,12 @@ public class BundleContextStub implements BundleContext {
     }
 
     public BundleContextStub addService(String svc, Object svcObject) {
-        m_services.add(new ServiceRegistrationStub(svc, svcObject));
+        m_services.add(new ServiceRegistrationStub(this, svc, svcObject));
+        return this;
+    }
+
+    public BundleContextStub addService(String svc, Object svcObject, Dictionary<String, ?> properties) {
+        m_services.add(new ServiceRegistrationStub(this, svc, svcObject, properties));
         return this;
     }
 
@@ -95,18 +100,27 @@ public class BundleContextStub implements BundleContext {
         throw new UnsupportedOperationException("Stub");
     }
 
+    public <S> ServiceRegistration<S> registerService(Class<S> clazz, S service, Dictionary<String, ?> properties) {
+        throw new UnsupportedOperationException("Stub");
+    }
+
     public ServiceRegistration registerService(String[] itfs, Object svc, Dictionary props) {
         throw new UnsupportedOperationException("Stub");
     }
 
     public ServiceRegistration registerService(String s, Object o, Dictionary dictionary) {
-        ServiceRegistrationStub reg = new ServiceRegistrationStub(s, o);
+        ServiceRegistrationStub reg = new ServiceRegistrationStub(this, s, o);
         m_services.add(reg);
         return reg;
     }
 
     public ServiceReference[] getServiceReferences(String itf, String filter) throws InvalidSyntaxException {
         List<ServiceReference> refs = new ArrayList<ServiceReference>();
+        Filter ldap;
+        if (filter != null) {
+
+        }
+
         for (ServiceRegistrationStub reg: m_services) {
             if (itf == null) {
                 refs.add(reg.getReference());
@@ -137,6 +151,23 @@ public class BundleContextStub implements BundleContext {
         return null;
     }
 
+    public <S> ServiceReference<S> getServiceReference(Class<S> clazz) {
+        return getServiceReference(clazz.getName());
+    }
+
+    public <S> Collection<ServiceReference<S>> getServiceReferences(Class<S> clazz, String filter) throws InvalidSyntaxException {
+        ServiceReference[] refs = getServiceReferences(clazz.getName(), filter);
+        if (refs == null) {
+            return Collections.emptyList();
+        } else {
+            ArrayList<ServiceReference<S>> references = new ArrayList<ServiceReference<S>>();
+            for (ServiceReference s : refs) {
+                references.add(s);
+            }
+            return references;
+        }
+    }
+
     public Object getService(ServiceReference serviceReference) {
         return ((ServiceReferenceStub) serviceReference).m_reg.m_svcObject;
     }
@@ -153,58 +184,8 @@ public class BundleContextStub implements BundleContext {
         throw new UnsupportedOperationException("Stub");
     }
 
-    class ServiceRegistrationStub implements  ServiceRegistration {
-
-        public ServiceReferenceStub m_ref = new ServiceReferenceStub(this);
-        public String m_interface;
-        public Object m_svcObject;
-
-        public ServiceRegistrationStub(String itf, Object svcObject) {
-            m_interface = itf;
-            m_svcObject = svcObject;
-        }
-
-        public ServiceReference getReference() {
-            return m_ref;
-        }
-
-        public void setProperties(Dictionary dictionary) {
-            return;
-        }
-
-        public void unregister() {
-            m_services.remove(this);
-            m_ref = null;
-        }
-    }
-
-    class ServiceReferenceStub implements ServiceReference {
-
-        public ServiceRegistrationStub m_reg;
-
-        public ServiceReferenceStub(ServiceRegistrationStub reg) {
-            m_reg = reg;
-        }
-
-        public Object getProperty(String s) {
-            return null;
-        }
-
-        public String[] getPropertyKeys() {
-            return new String[0];
-        }
-
-        public Bundle getBundle() {
-            return null;
-        }
-
-        public Bundle[] getUsingBundles() {
-            return null;
-        }
-
-        public boolean isAssignableTo(Bundle bundle, String s) {
-            return true;
-        }
+    public Bundle getBundle(String location) {
+        return null;
     }
 
 

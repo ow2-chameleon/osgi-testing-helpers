@@ -37,13 +37,17 @@ import static org.ops4j.pax.exam.CoreOptions.bundle;
  */
 public class TestBundleOption {
 
-    public static Option testBundle(List<String> extraExports) {
+    public static Option testBundle(List<String> extraExports, boolean deleteTestBundle) {
         File out = new File("target/tested/test-bundle.jar");
         if (out.exists()) {
-            try {
-                return bundle(out.toURI().toURL().toExternalForm());
-            } catch (MalformedURLException e) {
-                // Ignore it.
+            if (deleteTestBundle) {
+                out.delete();
+            } else {
+                try {
+                    return bundle(out.toURI().toURL().toExternalForm());
+                } catch (MalformedURLException e) {
+                    // Ignore it.
+                }
             }
         }
 
@@ -100,9 +104,6 @@ public class TestBundleOption {
         }
     }
 
-    public static Option testBundle() {
-        return testBundle(new ArrayList<String>());
-    }
 
 
 }

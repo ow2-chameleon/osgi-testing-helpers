@@ -21,15 +21,36 @@ import org.osgi.framework.BundleContext;
  */
 public class FrameworkHelper {
 
-    public static boolean isKnopflerfish(BundleContext bc) {
-        return bc.getClass().toString().contains("knopflerfish");
+    public static final String KF = "knopflerfish";
+    public static final String FELIX = "felix";
+    public static final String PAX_EXAM_FRAMEWORK = "pax.exam.framework";
+    public static final String EQUINOX = "equinox";
+
+    public static boolean isKnopflerfish(BundleContext context) {
+        if (context != null) {
+            return context.getClass().toString().contains(KF);
+        } else {
+            String pf = System.getProperty(PAX_EXAM_FRAMEWORK);
+            return pf != null && pf.equalsIgnoreCase(KF);
+        }
     }
 
-    public static boolean isFelix(BundleContext bc) {
-        return bc.getClass().toString().contains("felix");
+    public static boolean isFelix(BundleContext context) {
+        if (context != null) {
+            return context.getClass().toString().contains(FELIX);
+        } else {
+            String pf = System.getProperty(PAX_EXAM_FRAMEWORK);
+            return pf != null && pf.equalsIgnoreCase(FELIX);
+        }
     }
 
-    public static boolean isEquinox(BundleContext bc) {
-        return bc.getClass().toString().contains("equinox");
+    public static boolean isEquinox(BundleContext context) {
+        if (context != null) {
+            return context.toString().contains(EQUINOX) || context.toString().contains("eclipse");
+        } else {
+            String pf = System.getProperty(PAX_EXAM_FRAMEWORK);
+            return pf != null && pf.equalsIgnoreCase(EQUINOX);
+        }
     }
 }
+

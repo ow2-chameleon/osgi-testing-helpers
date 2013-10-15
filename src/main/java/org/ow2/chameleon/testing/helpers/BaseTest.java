@@ -25,7 +25,6 @@ import org.ops4j.pax.exam.OptionUtils;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
-import org.ops4j.pax.exam.spi.reactors.PerMethod;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -81,6 +80,8 @@ public class BaseTest {
     protected boolean testBundle = true;
     protected boolean mockito = false;
 
+    protected boolean deleteTestBundle = false;
+
     /**
      * The default configuration.
      *
@@ -110,7 +111,7 @@ public class BaseTest {
         }
 
         if (deployTestBundle()) {
-            options = OptionUtils.combine(options, testBundle(getExtraExports()));
+            options = OptionUtils.combine(options, testBundle(getExtraExports(), deleteTestBundle));
         }
 
         if (deployMockito()) {
@@ -209,6 +210,15 @@ public class BaseTest {
      */
     public boolean deployTestBundle() {
         return testBundle;
+    }
+
+    /**
+     * Method to override to instruct pax exam to delete the test bundle if already built.
+     *
+     * @return true to delete the test bundle.
+     */
+    public boolean deleteTestBundle() {
+        return deleteTestBundle;
     }
 
     /**

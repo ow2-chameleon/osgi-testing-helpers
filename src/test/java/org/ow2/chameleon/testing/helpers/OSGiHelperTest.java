@@ -21,8 +21,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.*;
 import static org.junit.Assert.assertEquals;
+
+import static org.fest.assertions.Assertions.*;
 
 public class OSGiHelperTest {
 
@@ -49,9 +51,11 @@ public class OSGiHelperTest {
 
         m_bc.addService(Runnable.class.getName(), new Object());
 
-        assertTrue(m_helper.isServiceAvailable(Runnable.class.getName()));
-        assertTrue(m_helper.isServiceAvailable(Runnable.class));
+        assertThat(m_helper.isServiceAvailable(Runnable.class.getName())).isTrue();
+        assertThat(m_helper.isServiceAvailable(Runnable.class)).isTrue();
     }
+
+
 
     @Test
     public void getServiceReference() {
@@ -104,7 +108,6 @@ public class OSGiHelperTest {
 
         o = m_helper.getServiceObject(Runnable.class);
         assertNotNull(o);
-        assertTrue(o instanceof  Runnable);
 
         o = m_helper.getServiceObject(Runnable.class.getName(), null);
         assertNotNull(o);
@@ -112,7 +115,6 @@ public class OSGiHelperTest {
 
         o = m_helper.getServiceObject(Runnable.class, null);
         assertNotNull(o);
-        assertTrue(o instanceof  Runnable);
 
         Object[] os = m_helper.getServiceObjects(List.class.getName(), null);
         assertEquals(2, os.length);
@@ -121,13 +123,9 @@ public class OSGiHelperTest {
 
         List<List> oss = m_helper.getServiceObjects(List.class, null);
         assertEquals(2, oss.size());
-        assertTrue(oss.get(0) instanceof List);
-        assertTrue(oss.get(1) instanceof List);
 
         oss = m_helper.getServiceObjects(List.class);
         assertEquals(2, oss.size());
-        assertTrue(oss.get(0) instanceof List);
-        assertTrue(oss.get(1) instanceof List);
     }
 
 
