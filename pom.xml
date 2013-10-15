@@ -168,15 +168,56 @@
                     </instructions>
                 </configuration>
             </plugin>
+
+            <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.0</version>
+                    <configuration>
+                        <skipDeploy>true</skipDeploy>
+                        <reportPlugins>
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-project-info-reports-plugin</artifactId>
+                                <version>2.4</version>
+                                <configuration>
+                                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-javadoc-plugin</artifactId>
+                                <version>2.9</version>
+                                <configuration>
+                                    <show>private</show>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-surefire-report-plugin</artifactId>
+                                <version>2.5</version>
+                            </plugin>
+                        </reportPlugins>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.ju-n.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.0.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.pegdown</groupId>
+                            <artifactId>pegdown</artifactId>
+                            <version>1.3.0</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
         </plugins>
     </build>
 
     <scm>
-        <connection>scm:svn:svn+ssh://svn.forge.objectweb.org/svnroot/chameleon/trunk/testing/osgi-helpers
-        </connection>
-        <developerConnection>
-            scm:svn:svn+ssh://cescoffier@svn.forge.objectweb.org/svnroot/chameleon/trunk/testing/osgi-helpers
-        </developerConnection>
-        <url>scm:svn:svn+ssh://svn.forge.objectweb.org/svnroot/chameleon/trunk/testing/osgi-helpers</url>
+        <connection>scm:git:git@github.com:ow2-chameleon/osgi-testing-helpers.git</connection>
+        <url>https://github.com/ow2-chameleon/osgi-testing-helpers</url>
+        <developerConnection>scm:git:git@github.com:ow2-chameleon/osgi-testing-helpers.git</developerConnection>
     </scm>
 </project>

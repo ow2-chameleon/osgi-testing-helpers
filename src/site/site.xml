@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="everest" xmlns="http://maven.apache.org/DECORATION/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+    <bannerLeft>
+        <name>OW2 Chameleon - OSGi Testing Helpers</name>
+        <src></src>
+        <href>#</href>
+    </bannerLeft>
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.3.0</version>
+    </skin>
+    <custom>
+        <fluidoSkin>
+            <topBarEnabled>false</topBarEnabled>
+            <sideBarEnabled>true</sideBarEnabled>
+
+            <gitHub>
+                <projectId>99soft/backport-spi</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>black</ribbonColor>
+            </gitHub>
+        </fluidoSkin>
+    </custom>
+
+    <body>
+        <head>
+            <!-- because the structure is not flat we must use absolute urls -->
+            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/site.css" type="text/css"/>
+            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/bootstrap.css" type="text/css" />
+            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/custom.css" type="text/css" />
+            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/fonts.css" type="text/css" />
+            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/color_schemes.css" type="text/css" />
+        </head>
+
+        <menu name="OSGi Test Helpers">
+            <item name="About" href="about.html"/>
+            <item name="Downloads" href="downloads.html"/>
+            <item name="Documentation" href="documentation.html"/>
+        </menu>
+
+        <menu ref="reports"/>
+    </body>
+</project>

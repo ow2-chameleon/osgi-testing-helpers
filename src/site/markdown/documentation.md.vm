@@ -1,0 +1,86 @@
+# OSGi Helpers
+
+The OSGi Helper project is a pretty simple library providing useful methods for OSGi integration-tests.
+The goal is to help the writing of OSGi tests by avoiding the burden of the regular OSGi API. For example, instead of
+always relying on the bundle context to get a service, the OSGi helper provides a ‘getServiceObject’ method.
+
+The OSGi helper library does not only contain OSGi specific method, but also support iPOJO and provides an extensible
+mechanism to add others helpers.
+
+Using the OSGi Helper Library with OPS4J Pax Exam
+First, you need to add the OSGi helper library in your class path. For Maven, it looks like:
+
+```xml
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+```
+
+Then, helper objects are initialized in the `@Before` and disposed in the `@After` methods. Disposing helpers cleans
+all the resources used by the helper (service references, instances…). You also need to deploy the library as an OSGi
+bundle. So, your test class should contain something like:
+
+```java
+    @Inject
+    private BundleContext context;
+    private OSGiHelper osgi;
+    private IPOJOHelper ipojo;
+
+    @Configuration
+    public static Option[] configure() throws Exception {
+        Option[] opt = CoreOptions.options(
+            CoreOptions.felix(),
+            CoreOptions.provision(
+              CoreOptions.mavenBundle()
+                 .groupId("org.apache.felix")
+                .artifactId("org.apache.felix.ipojo")
+                .versionAsInProject(),
+              CoreOptions.mavenBundle()
+               .groupId("org.ow2.chameleon.testing")
+               .artifactId("osgi-helpers")
+               .versionAsInProject()
+             // …
+      )
+       );
+        return opt;
+    }
+
+    @Before
+    public void setup() {
+        osgi = new OSGiHelper(context);
+        ipojo = new IPOJOHelper(context);
+    }
+
+    @After
+    public void tearDown() {
+        osgi.dispose();
+        ipojo.dispose();
+    }
+```
+
+Then, the osgi and ipojo members give you access to the tests methods. Note, that they can be used separately.
+
+```java
+    @Test
+    public void testMemWriter() throws Exception {
+        // Create the instance
+        Properties props = new Properties();
+        props.put(FeedWriter.FEED_TITLE_PROPERTY, "a feed");
+        ipojo
+           .createComponentInstance(
+              "org.ow2.chameleon.syndication.rome.memwriter",
+               props);
+        osgi.waitForService(FeedWriter.class.getName(), null, 5000);
+
+        ServiceReference ref = osgi
+              .getServiceReference(FeedReader.class.getName());
+        // ...
+
+        FeedWriter writer = (FeedWriter) osgi
+              .getServiceObject(FeedWriter.class.getName(), null);
+
+       //…
+    }
+```
