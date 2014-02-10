@@ -31,6 +31,7 @@ public class InstanceCreationHelper extends AbstractHelper {
     /**
      * Creates a new component instance with the given name (and empty
      * configuration), from the factory specified in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName  the name of the component factory, defined in the
      *                     local bundle.
@@ -39,12 +40,31 @@ public class InstanceCreationHelper extends AbstractHelper {
      */
     public ComponentInstance createComponentInstance(String factoryName,
                                                      String instanceName) {
-        return createComponentInstance(factoryName, instanceName, null);
+        return createComponentInstance(factoryName, instanceName, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given name (and empty
+     * configuration), from the factory specified in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName  the name of the component factory, defined in the
+     *                     local bundle.
+     * @param instanceName the name of the component instance to create.
+     * @param timeout      the timeout
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName,
+                                                     String instanceName,
+                                                     long timeout) {
+        return createComponentInstance(factoryName, instanceName, null, timeout);
     }
 
     /**
      * Creates a new component instance with the given configuration, from the
      * factory specified in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName   the name of the component factory, in the local
      *                      bundle.
@@ -54,7 +74,26 @@ public class InstanceCreationHelper extends AbstractHelper {
      */
     public ComponentInstance createComponentInstance(String factoryName,
                                                      Dictionary<String, String> configuration) {
-        Factory factory = factoryHelper.getFactory(factoryName);
+       return createComponentInstance(factoryName, configuration, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given configuration, from the
+     * factory specified in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName   the name of the component factory, in the local
+     *                      bundle.
+     * @param configuration the configuration of the component instance to
+     *                      create.
+     * @param timeout       the timeout
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName,
+                                                     Dictionary<String, String> configuration,
+                                                     long timeout) {
+        Factory factory = factoryHelper.getFactory(factoryName, timeout);
         try {
             ComponentInstance instance = factory.createComponentInstance(configuration);
             instances.add(instance);
@@ -65,9 +104,11 @@ public class InstanceCreationHelper extends AbstractHelper {
         return null;
     }
 
+
     /**
      * Creates a new component instance with the given configuration, from the
      * factory specified in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName   the name of the component factory, in the local
      *                      bundle.
@@ -77,7 +118,26 @@ public class InstanceCreationHelper extends AbstractHelper {
      */
     public ComponentInstance createComponentInstance(String factoryName,
                                                      Properties configuration) {
-        Factory factory = factoryHelper.getFactory(factoryName);
+        return createComponentInstance(factoryName, configuration, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given configuration, from the
+     * factory specified in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName   the name of the component factory, in the local
+     *                      bundle.
+     * @param configuration the configuration of the component instance to
+     *                      create.
+     * @param timeout       the timeout
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName,
+                                                     Properties configuration,
+                                                     long timeout) {
+        Factory factory = factoryHelper.getFactory(factoryName, timeout);
         try {
             ComponentInstance instance = factory.createComponentInstance(configuration);
             instances.add(instance);
@@ -88,20 +148,38 @@ public class InstanceCreationHelper extends AbstractHelper {
         return null;
     }
 
+
     /**
      * Creates a new component instance with no configuration.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName the name of the component factory, in the local
      *                    bundle.
      * @return the newly created component instance.
      */
     public ComponentInstance createComponentInstance(String factoryName) {
-        return createComponentInstance(factoryName, (Dictionary<String, String>) null);
+        return createComponentInstance(factoryName, 0);
+    }
+
+
+    /**
+     * Creates a new component instance with no configuration.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName the name of the component factory, in the local
+     *                    bundle.
+     * @param timeout     the timeout
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName, long timeout) {
+        return createComponentInstance(factoryName, (Dictionary<String, String>) null, timeout);
     }
 
     /**
      * Creates a new component instance with the given name and configuration,
      * from the factory specified in the given bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName   the name of the component factory, defined in the
      *                      specified bundle.
@@ -111,12 +189,31 @@ public class InstanceCreationHelper extends AbstractHelper {
      */
     public ComponentInstance createComponentInstance(String factoryName,
                                                      String instanceName, Dictionary<String, String> configuration) {
+        return createComponentInstance(factoryName, instanceName, configuration);
+    }
+
+    /**
+     * Creates a new component instance with the given name and configuration,
+     * from the factory specified in the given bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName   the name of the component factory, defined in the
+     *                      specified bundle.
+     * @param instanceName  the name of the component instance to create.
+     * @param configuration the configuration of the instance to create.
+     * @param timeout       the timeout
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName,
+                                                     String instanceName, Dictionary<String, String> configuration,
+                                                     long timeout) {
 
         if (configuration == null) {
             configuration = new Hashtable<String, String>();
         }
         configuration.put(Factory.INSTANCE_NAME_PROPERTY, instanceName);
-        return createComponentInstance(factoryName, configuration);
+        return createComponentInstance(factoryName, configuration, timeout);
     }
 
     /**

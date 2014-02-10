@@ -94,13 +94,28 @@ public class IPOJOHelper extends AbstractHelper {
 
     /**
      * Returns the component factory with the given name in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName the name of the factory to retrieve.
      * @return the component factory with the given name in the local bundle, or
      *         {@code null} if not found.
      */
     public Factory getFactory(String factoryName) {
-        return m_factoryHelper.getFactory(factoryName);
+        return getFactory(factoryName, 0);
+    }
+
+    /**
+     * Returns the component factory with the given name in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName the name of the factory to retrieve.
+     * @param timeout     the timeout
+     * @return the component factory with the given name in the local bundle, or
+     *         {@code null} if not found.
+     */
+    public Factory getFactory(String factoryName, long timeout) {
+        return m_factoryHelper.getFactory(factoryName, timeout);
     }
 
     /**
@@ -121,6 +136,7 @@ public class IPOJOHelper extends AbstractHelper {
     /**
      * Creates a new component instance with the given configuration, from the
      * factory specified in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName   the name of the component factory, in the local
      *                      bundle.
@@ -129,12 +145,30 @@ public class IPOJOHelper extends AbstractHelper {
      * @return the newly created component instance.
      */
     public ComponentInstance createComponentInstance(String factoryName, Properties configuration) {
-        return m_instanceCreationHelper.createComponentInstance(factoryName, configuration);
+        return createComponentInstance(factoryName, configuration, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given configuration, from the
+     * factory specified in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName   the name of the component factory, in the local
+     *                      bundle.
+     * @param configuration the configuration of the component instance to
+     *                      create.
+     * @param timeout       the timeout
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName, Properties configuration, long timeout) {
+        return m_instanceCreationHelper.createComponentInstance(factoryName, configuration, timeout);
     }
 
     /**
      * Creates a new component instance with the given name and configuration,
      * from the factory specified in the given bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName   the name of the component factory, defined in the
      *                      specified bundle.
@@ -144,7 +178,25 @@ public class IPOJOHelper extends AbstractHelper {
      */
     public ComponentInstance createComponentInstance(String factoryName, String instanceName, Dictionary<String,
             String> configuration) {
-        return m_instanceCreationHelper.createComponentInstance(factoryName, instanceName, configuration);
+        return createComponentInstance(factoryName, instanceName, configuration, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given name and configuration,
+     * from the factory specified in the given bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName   the name of the component factory, defined in the
+     *                      specified bundle.
+     * @param instanceName  the name of the component instance to create.
+     * @param configuration the configuration of the instance to create.
+     * @param timeout       the timeout.
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName, String instanceName, Dictionary<String,
+            String> configuration, long timeout) {
+        return m_instanceCreationHelper.createComponentInstance(factoryName, instanceName, configuration, timeout);
     }
 
     /**
@@ -161,6 +213,7 @@ public class IPOJOHelper extends AbstractHelper {
     /**
      * Creates a new component instance with the given name (and empty
      * configuration), from the factory specified in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName  the name of the component factory, defined in the
      *                     local bundle.
@@ -168,12 +221,29 @@ public class IPOJOHelper extends AbstractHelper {
      * @return the newly created component instance.
      */
     public ComponentInstance createComponentInstance(String factoryName, String instanceName) {
-        return m_instanceCreationHelper.createComponentInstance(factoryName, instanceName);
+        return createComponentInstance(factoryName, instanceName, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given name (and empty
+     * configuration), from the factory specified in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName  the name of the component factory, defined in the
+     *                     local bundle.
+     * @param instanceName the name of the component instance to create.
+     * @param timeout      the timeout.
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName, String instanceName, long timeout) {
+        return m_instanceCreationHelper.createComponentInstance(factoryName, instanceName, timeout);
     }
 
     /**
      * Creates a new component instance with the given configuration, from the
      * factory specified in the local bundle.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName   the name of the component factory, in the local
      *                      bundle.
@@ -182,18 +252,51 @@ public class IPOJOHelper extends AbstractHelper {
      * @return the newly created component instance.
      */
     public ComponentInstance createComponentInstance(String factoryName, Dictionary<String, String> configuration) {
-        return m_instanceCreationHelper.createComponentInstance(factoryName, configuration);
+        return createComponentInstance(factoryName, configuration, 0);
+    }
+
+    /**
+     * Creates a new component instance with the given configuration, from the
+     * factory specified in the local bundle.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName   the name of the component factory, in the local
+     *                      bundle.
+     * @param configuration the configuration of the component instance to
+     *                      create.
+     * @param timeout       the timeout.
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName, Dictionary<String, String> configuration,
+                                                     long timeout) {
+        return m_instanceCreationHelper.createComponentInstance(factoryName, configuration, timeout);
     }
 
     /**
      * Creates a new component instance with no configuration.
+     * If the factory is not available, it waits for it 10 seconds.
      *
      * @param factoryName the name of the component factory, in the local
      *                    bundle.
      * @return the newly created component instance.
      */
     public ComponentInstance createComponentInstance(String factoryName) {
-        return m_instanceCreationHelper.createComponentInstance(factoryName);
+        return createComponentInstance(factoryName, 0);
+    }
+
+    /**
+     * Creates a new component instance with no configuration.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName the name of the component factory, in the local
+     *                    bundle.
+     * @param timeout     the timeout.
+     * @return the newly created component instance.
+     */
+    public ComponentInstance createComponentInstance(String factoryName, long timeout) {
+        return m_instanceCreationHelper.createComponentInstance(factoryName, timeout);
     }
 
     // =============================================================================

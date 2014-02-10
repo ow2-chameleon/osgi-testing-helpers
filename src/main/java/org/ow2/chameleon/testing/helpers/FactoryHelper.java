@@ -26,15 +26,29 @@ public class FactoryHelper extends AbstractHelper {
 
     /**
      * Returns the component factory with the given name.
+     * If the factory is not available, it waits for it 10  seconds.
      *
      * @param factoryName the name of the factory to retrieve.
      * @return the component factory with the given name in the local bundle, or
      *         {@code null} if not found.
      */
     public Factory getFactory(String factoryName) {
+        return getFactory(factoryName, 0);
+    }
+
+    /**
+     * Returns the component factory with the given name.
+     * If the factory is not available, it adopts the timeout value given as parameter (in milliseconds).
+     * If timeout is set to 0, it sets the timeout to 10s.
+     *
+     * @param factoryName the name of the factory to retrieve.
+     * @return the component factory with the given name in the local bundle, or
+     *         {@code null} if not found.
+     */
+    public Factory getFactory(String factoryName, long timeout) {
         // Waits for the factory.
         return osgiHelper.waitForService(Factory.class,
-                "(factory.name=" + factoryName + ")", 1000, false);
+                "(factory.name=" + factoryName + ")", timeout, false);
     }
 
     /**
