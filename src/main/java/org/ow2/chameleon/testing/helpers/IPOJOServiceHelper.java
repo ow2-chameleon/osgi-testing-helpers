@@ -266,6 +266,35 @@ public class IPOJOServiceHelper extends AbstractHelper {
      *         specified interface and having the given name.
      */
     public ServiceReference getServiceReferenceByName(String itf, String name) {
+        return getServiceReferenceByName(itf, name, 0);
+    }
+
+    /**
+     * Returns the service reference of a service provided by the specified
+     * bundle, offering the specified interface and having the given name.
+     *
+     * @param itf     the interface provided by the searched service.
+     * @param name    the name of the searched service.
+     * @param timeout the timeout
+     * @return a service provided by the specified bundle, offering the
+     *         specified interface and having the given name.
+     */
+    public ServiceReference getServiceReferenceByName(String itf, String name, long timeout) {
+        return getServiceReferenceByName(itf, name, timeout, true);
+    }
+
+    /**
+     * Returns the service reference of a service provided by the specified
+     * bundle, offering the specified interface and having the given name.
+     *
+     * @param itf     the interface provided by the searched service.
+     * @param name    the name of the searched service.
+     * @param timeout the timeout
+     * @param fail    fail the test if there are no serviceReference when the timeout is reached
+     * @return a service provided by the specified bundle, offering the
+     *         specified interface and having the given name.
+     */
+    public ServiceReference getServiceReferenceByName(String itf, String name, long timeout, boolean fail) {
         String filter;
         if (itf.equals(Factory.class.getName())
                 || itf.equals(ManagedServiceFactory.class.getName())) {
@@ -277,7 +306,7 @@ public class IPOJOServiceHelper extends AbstractHelper {
         }
 
         // We wait if it's not available.
-        return osgiHelper.waitForService(itf, filter, 1000, false);
+        return osgiHelper.waitForService(itf, filter, timeout, fail);
     }
 
     /**
@@ -290,6 +319,35 @@ public class IPOJOServiceHelper extends AbstractHelper {
      *         specified interface and having the given name.
      */
     public <T> T getServiceObjectByName(Class<T> itf, String name) {
+        return getServiceObjectByName(itf, name, 0);
+    }
+
+    /**
+     * Returns the service reference of a service provided by the specified
+     * bundle, offering the specified interface and having the given name.
+     *
+     * @param itf     the interface provided by the searched service.
+     * @param name    the name of the searched service.
+     * @param timeout the timeout
+     * @return a service provided by the specified bundle, offering the
+     *         specified interface and having the given name.
+     */
+    public <T> T getServiceObjectByName(Class<T> itf, String name, long timeout) {
+        return getServiceObjectByName(itf, name, timeout, true);
+    }
+
+    /**
+     * Returns the service reference of a service provided by the specified
+     * bundle, offering the specified interface and having the given name.
+     *
+     * @param itf    the interface provided by the searched service.
+     * @param name   the name of the searched service.
+     * @param timeout the timeout
+     * @param fail    fail the test if there are no serviceReference when the timeout is reached
+     * @return a service provided by the specified bundle, offering the
+     *         specified interface and having the given name.
+     */
+    public <T> T getServiceObjectByName(Class<T> itf, String name, long timeout, boolean fail) {
         String filter;
         if (itf.getName().equals(Factory.class.getName())
                 || itf.getName().equals(ManagedServiceFactory.class.getName())) {
@@ -301,7 +359,7 @@ public class IPOJOServiceHelper extends AbstractHelper {
         }
 
         // We wait if it's not available.
-        return osgiHelper.waitForService(itf, filter, 1000, false);
+        return osgiHelper.waitForService(itf, filter, timeout, fail);
     }
 
     /**
