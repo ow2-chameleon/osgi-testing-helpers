@@ -23,7 +23,7 @@
     <artifactId>osgi-helpers</artifactId>
     <packaging>bundle</packaging>
     <name>OW2 Chameleon - OSGi Helpers</name>
-    <version>0.6.2</version>
+    <version>0.6.3-SNAPSHOT</version>
 
     <properties>
         <exam.version>3.0.0</exam.version>
