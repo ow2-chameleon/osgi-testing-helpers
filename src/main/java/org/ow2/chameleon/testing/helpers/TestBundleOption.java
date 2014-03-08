@@ -90,9 +90,12 @@ public class TestBundleOption {
 
         InputStream inputStream = tested
                 .set(Constants.BUNDLE_SYMBOLICNAME, BaseTest.TEST_BUNDLE_SYMBOLIC_NAME)
-                .set(Constants.IMPORT_PACKAGE, "*")
                 .set(Constants.EXPORT_PACKAGE, clause)
                 .build(IPOJOStrategy.withiPOJO(new File("src/main/resources")));
+
+        // Setting the import-package to * generates an import clause with * which is invalid. In addition * is not
+        // required as it's the default.
+
 
         try {
             org.apache.commons.io.FileUtils.copyInputStreamToFile(inputStream, out);
