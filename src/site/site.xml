@@ -29,16 +29,16 @@
     <body>
         <head>
             <!-- because the structure is not flat we must use absolute urls -->
-            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/site.css" type="text/css"/>
-            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/bootstrap.css" type="text/css" />
-            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/custom.css" type="text/css" />
-            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/fonts.css" type="text/css" />
-            <link rel="stylesheet" href="http://bourretp.github.io/everest/snapshot/css/color_schemes.css" type="text/css" />
+            <link rel="stylesheet" href="css/site.css" type="text/css"/>
+            <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+            <link rel="stylesheet" href="css/custom.css" type="text/css" />
+            <link rel="stylesheet" href="css/fonts.css" type="text/css" />
+            <link rel="stylesheet" href="css/color_schemes.css" type="text/css" />
         </head>
 
         <menu name="OSGi Test Helpers">
-            <item name="About" href="about.html"/>
-            <item name="Downloads" href="downloads.html"/>
+            <!--<item name="About" href="about.html"/>-->
+            <!--<item name="Downloads" href="downloads.html"/>-->
             <item name="Documentation" href="documentation.html"/>
         </menu>
 

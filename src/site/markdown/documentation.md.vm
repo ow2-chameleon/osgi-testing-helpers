@@ -84,3 +84,5 @@ Then, the osgi and ipojo members give you access to the tests methods. Note, tha
        //…
     }
 ```
+
+The complete API is available [here](apidocs/index.html)
