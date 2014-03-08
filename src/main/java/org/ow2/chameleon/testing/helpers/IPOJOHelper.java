@@ -82,6 +82,13 @@ public class IPOJOHelper extends AbstractHelper {
     // =============================================================================
 
     /**
+     * @return the factory helper.
+     */
+    public FactoryHelper getFactoryHelper() {
+        return m_factoryHelper;
+    }
+
+    /**
      * Returns the handler factory with the given name in the local bundle.
      *
      * @param factoryName the name of the handler factory to retrieve.
