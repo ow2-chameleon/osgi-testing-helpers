@@ -17,7 +17,7 @@ package org.ow2.chameleon.testing.helpers;
 
 import org.junit.Test;
 
-public class ThreadDumpTests {
+public class ThreadDumpTest {
 
     @Test
     public void testThreadUmp() {
