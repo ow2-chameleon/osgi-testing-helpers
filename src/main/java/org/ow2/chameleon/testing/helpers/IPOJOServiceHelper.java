@@ -1,3 +1,17 @@
+/*
+* Copyright 2009 OW2 Chameleon
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package org.ow2.chameleon.testing.helpers;
 
 import org.apache.felix.ipojo.Factory;
@@ -273,6 +287,20 @@ public class IPOJOServiceHelper extends AbstractHelper {
      * Returns the service reference of a service provided by the specified
      * bundle, offering the specified interface and having the given name.
      *
+     * @param itf    the interface provided by the searched service.
+     * @param name   the name of the searched service.
+     * @param fail   fail the test if there are no serviceReference when the timeout is reached
+     * @return a service provided by the specified bundle, offering the
+     *         specified interface and having the given name.
+     */
+    public ServiceReference getServiceReferenceByName(String itf, String name, boolean fail) {
+        return getServiceReferenceByName(itf, name, 0, fail);
+    }
+
+    /**
+     * Returns the service reference of a service provided by the specified
+     * bundle, offering the specified interface and having the given name.
+     *
      * @param itf     the interface provided by the searched service.
      * @param name    the name of the searched service.
      * @param timeout the timeout
@@ -371,7 +399,7 @@ public class IPOJOServiceHelper extends AbstractHelper {
      *         otherwise.
      */
     public boolean isServiceAvailableByName(String itf, String name) {
-        return getServiceReferenceByName(itf, name) != null;
+        return getServiceReferenceByName(itf, name, false) != null;
     }
 
 

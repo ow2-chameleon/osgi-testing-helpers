@@ -165,6 +165,16 @@ public class OSGiHelper extends AbstractHelper {
     }
 
     /**
+     * Returns the service object associated with the service reference. This method does not use generics. The name
+     * is different because it conflicts with the getServiceObject method.
+     * @param ref the service reference
+     * @return the service object
+     */
+    public Object getRawServiceObject(ServiceReference ref) {
+        return service.getServiceObject(ref);
+    }
+
+    /**
      * Checks if the service is available.
      *
      * @param itf the service interface
