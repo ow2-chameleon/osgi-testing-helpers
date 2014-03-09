@@ -1,0 +1,13 @@
+/* Add some space between features. */
+.feature-list li {
+    margin-bottom: 5px;
+}
+/* Increase the bottom space after the logo. */
+#bannerLeft img {
+    margin-bottom: 7px;
+}
+
+/* Hide the power by maven **ugly** logo */
+.poweredBy {
+    display: none;
+}
